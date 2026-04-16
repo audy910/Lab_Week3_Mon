@@ -23,7 +23,7 @@ top dut                    // declare an inst of top called "dut" (device under 
     .clk(clk_tb)           // connect dut's clk wire to clk_tb
 );
 
-localparam CLK_PERIOD = /** clk period */;
+localparam CLK_PERIOD = 40; // 40ns clock period => 25MHz clock frequency
 always #(CLK_PERIOD/2) clk_tb=~clk_tb;          // toggle clk_tb every #(CLK_PERIOD/2) ticks
 
 initial begin
@@ -32,10 +32,27 @@ initial begin
 end
 
 initial begin
-    /** testbench logic goes below */
-    clk_tb<=1'b1;       // sets clk_tb to 1
-    #(CLK_PERIOD*3);    // waits for CLK_PERIOD * 3 ticks
-    $finish;            // end simulation, otherwise it runs indefinitely
+    clk_tb = 1'b1;
+    rst_tb = 1'b1;
+    in_tb  = 1'b0;
+    #(CLK_PERIOD*2);
+
+    rst_tb = 1'b0;          // release reset
+    #(CLK_PERIOD*4);
+
+    in_tb = 1'b1;           // press button → should toggle ON
+    #(CLK_PERIOD*4);
+
+    in_tb = 1'b0;           // release
+    #(CLK_PERIOD*4);
+
+    in_tb = 1'b1;           // press again → should toggle OFF
+    #(CLK_PERIOD*4);
+
+    in_tb = 1'b0;
+    #(CLK_PERIOD*2);
+
+    $finish;
 end
 
 endmodule
