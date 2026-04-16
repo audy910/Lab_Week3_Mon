@@ -15,7 +15,7 @@ module dutyCycleSM (
         case (state)
             WAIT: begin
                 if (in) begin
-                    duty_cycle <= (duty_cycle >= 9) ? 4'd0 : duty_cycle + 1;
+                    duty_cycle <= (duty_cycle >= 4'd10) ? 4'd0 : duty_cycle + 1;
                     state      <= PRESSED;
                 end
             end

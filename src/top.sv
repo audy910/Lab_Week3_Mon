@@ -43,10 +43,10 @@ module top (
     );
 
     always_ff @(posedge clk) begin
-        pwm_blue <= (pwm_blue >= 4'd9) ? 4'd0 : pwm_blue + 1;
+        pwm_blue <= (pwm_blue >= 4'd10) ? 4'd0 : pwm_blue + 1;
     end
     always_ff @(posedge clk) begin
-        pwm_green <= (pwm_green >= 4'd9) ? 4'd0 : pwm_green + 1;
+        pwm_green <= (pwm_green >= 4'd10) ? 4'd0 : pwm_green + 1;
     end
 
     assign   blue = (pwm_blue < duty_cycle_blue) ? 1'b1 : 1'b0;
